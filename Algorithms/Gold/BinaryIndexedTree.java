@@ -9,7 +9,7 @@ import java.awt.*;
 //accessing elements takes O(log n) -- instead of O(1)
 
 
-public class BinaryTree {
+public class BinaryIndexedTree {
 	public static class Node {
 		Node left, right;
 		int val;
@@ -17,7 +17,7 @@ public class BinaryTree {
 			val = v;
 		}
 	}
-	public static void add (Node root, int add) {
+	public static void add(Node root, int add) {
 		//if the add is less than the root, it goes to the left
 		//if add is greater, then go to the right
 		if (root.val < add) {
@@ -36,23 +36,43 @@ public class BinaryTree {
 		}
 	}
 	public static void inorderTraversal(Node root) {
-		//trying to print it out in order
-		if (root == null) { //always have a null check in trees
-			return;
-		}
+		//print nodes out in order
+		if (root == null) return; //always have a null check in trees
 		inorderTraversal(root.left);
 		System.out.print(root.val + " ");
 		inorderTraversal(root.right);
 	}
+	public static void inordernonrec(Node root) {
+		//prints nodes out in order without recursion
+		if (root == null) return; //always have a null check in trees
+		Stack<Node> stack = new Stack<Node>();
+		while (root != null || stack.size() > 0) {
+			while (root !=  null) { //go as left as possible -- the smallest value
+				stack.push(root);
+				root = root.left;
+			}
+			root = stack.pop(); //pops the smallest value
+			System.out.print(root.val + " ");
+			root = root.right; //goes to the right of node, next smallest
+		}
+	}
 	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(System.in);
-		Node root = new Node(10); //the beginning node is 10
+		int count = 0;
+		Node root = new Node(0); //random value -- this will be overwritten when the first number is inputted
 		while(true) {
 			System.out.println("Enter a number to add to the tree: ");
 			int add = sc.nextInt();
+			if (count == 0) root = new Node(add);
 			add(root, add);
+			System.out.print("Inorder traversal: ");
 			inorderTraversal(root);
 			System.out.println();
+			System.out.print("Non-recursion inorder traversal: ");
+			inordernonrec(root);
+			System.out.println();
+			System.out.println("-------------------------------------");
+			count++;
 		}
 	}
 }
