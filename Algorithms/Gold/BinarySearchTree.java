@@ -4,12 +4,12 @@ import java.math.*;
 import java.lang.*;
 import java.awt.*;
 
-//Binary Indexed Tree: works similar to a binary search
+//Binary Search Tree: works similar to a binary search
 //add elements and maintain sorted order in O(log n) -- instead of O(n)
 //accessing elements takes O(log n) -- instead of O(1)
 
 
-public class BinaryIndexedTree {
+public class BinarySearchTree {
 	public static class Node {
 		Node left, right;
 		int val;
